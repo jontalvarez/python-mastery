@@ -1,10 +1,18 @@
-total_cost = 0.0
+def portfolio_cost(filename):
+    total_cost = 0.0
 
-with open('../Data/portfolio.dat', 'r') as f:
-    for line in f:
-        fields = line.split()
-        nshares = int(fields[1])
-        price = float(fields[2])
-        total_cost = total_cost + nshares * price
+    with open(filename, 'r') as f:
+        for line in f:
+            fields = line.split()
+            try:
+                nshares = int(fields[1])
+                price = float(fields[2])
+            except ValueError as e:
+                print('Couldn''t parse:', line)
+                print('Failed : Reason', e)
+            total_cost = total_cost + nshares * price
 
-print(total_cost)
+    return total_cost
+
+if __name__ == '__main__':
+    print(portfolio_cost('../Data/portfolio.dat'))
